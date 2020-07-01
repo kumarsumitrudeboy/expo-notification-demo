@@ -92,15 +92,8 @@ const SendNotifications = props => {
   
 
   // Can use this function below, OR use Expo's Push Notification Tool-> https://expo.io/dashboard/notifications
-  const sendPushNotification = async (receiverToken) => {
-    const message = {
-      to: receiverToken,
-      sound: 'default',
-      title: 'Hey! check my notification',
-      body: 'Could you please let me know if you received this notification',
-      data: { postId: 'slug-1' },
-      _displayInForeground: true,
-    };
+  const sendPushNotification = async (message) => {
+    const message = message;
     const response = await fetch('https://exp.host/--/api/v2/push/send', {
       method: 'POST',
       headers: {
@@ -111,6 +104,12 @@ const SendNotifications = props => {
       body: JSON.stringify(message),
     });
   };
+
+  if(props.sendMessage){
+    if((props.token!=null)&&(props.message!=null)){
+      sendPushNotification(props.message);
+    }
+  }
 
 
   
